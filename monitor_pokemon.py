@@ -2,6 +2,7 @@ import os
 import re
 import json
 import time
+import urllib.parse
 from datetime import datetime
 import requests
 
@@ -12,9 +13,14 @@ INTERVALO_MINUTOS = 5
 
 EN_GITHUB_ACTIONS = os.environ.get("GITHUB_ACTIONS") == "true"
 
+# Búsqueda completa: listado de cartas + catálogo de la marca POKÉMON en juguetería
 RIPLEY_URLS = [
     "https://simple.ripley.cl/s/list/cartas-pokemon?page=1",
-    "https://simple.ripley.cl/s/list/cartas-pokemon?page=2"
+    "https://simple.ripley.cl/s/list/cartas-pokemon?page=2",
+    "https://simple.ripley.cl/s/list/cartas-pokemon?page=3",
+    "https://simple.ripley.cl/jugueteria-y-ninos/juguetes?page=1&brand=POKEMON",
+    "https://simple.ripley.cl/jugueteria-y-ninos/juguetes?page=2&brand=POKEMON",
+    "https://simple.ripley.cl/jugueteria-y-ninos/juguetes?page=3&brand=POKEMON",
 ]
 
 BIGBANG_JSON_URL = "https://bigbang.cl/collections/pokemon-tcg/products.json?limit=250"
@@ -26,18 +32,20 @@ HEADERS = {
     "Accept-Language": "es-CL,es;q=0.9,en;q=0.8",
 }
 
+# Términos completos de TCG / Cartas en inglés y español
 TERMINOS_CARTAS = [
-    "carta", "cartas", "tcg", "booster", "blister",
-    "trainer box", "elite trainer", "etb", "sobre", "sobres",
-    "trading card", "lata", "tin", "mazo", "deck",
-    "bundle", "poster collection", "pin box", "special collection",
-    "binder", "album cartas"
+    "carta", "cartas", "tcg", "booster", "blister", "trainer",
+    "entrenador", "etb", "sobre", "sobres", "trading", "lata",
+    "latas", "tin", "deck", "mazo", "bundle", "partner",
+    "collection", "coleccion", "colección", "box", "showcase",
+    "toolkit", "binder", "album", "álbum"
 ]
 
+# Exclusiones estrictas para evitar peluches y otros juguetes ajenos
 TERMINOS_EXCLUIDOS = [
     "peluche", "peluches", "plush", "mochila", "polera", "poleron",
-    "polerón", "pijama", "gorro", "disfraz", "figura de accion",
-    "figura accion", "multipack figuras", "pistas", "lego", "puzzle"
+    "polerón", "pijama", "gorro", "disfraz", "multipack figuras",
+    "pistas", "lego", "puzzle", "auto", "figura de accion", "figura accion"
 ]
 
 def obtener_ruta_historial():
@@ -66,7 +74,7 @@ def enviar_telegram(mensaje):
         r = requests.post(url, json=payload, timeout=10)
         return r.status_code == 200
     except Exception as e:
-        print(f"Error Telegram: {e}")
+        print(f"Error enviando a Telegram: {e}")
         return False
 
 def cargar_vistos():
@@ -83,11 +91,13 @@ def guardar_vistos(vistos):
         with open(ARCHIVO_HISTORIAL, "w", encoding="utf-8") as f:
             json.dump(sorted(list(vistos)), f, ensure_ascii=False, indent=2)
     except Exception as e:
-        print(f"Error guardando: {e}")
+        print(f"Error guardando historial: {e}")
 
+# ================= RIPLEY =================
 def consultar_ripley():
     productos = []
-    patron = r'(/([a-zA-Z0-9\-]+?)-(\d{8,15}p))(?=[\?\"\'&])'
+    # Captura cualquier URL directa de Ripley terminada en código numérico + 'p'
+    patron = r'(/([^\"\'\s<>]+?)-(\d{8,15}[pP]))(?:[\?\"\'&\s>]|$)'
     vistos_skus = set()
 
     for url_cat in RIPLEY_URLS:
@@ -97,28 +107,34 @@ def consultar_ripley():
                 continue
 
             for link_rel, slug, sku in re.findall(patron, res.text):
-                if sku in vistos_skus:
+                sku_limpio = sku.lower()
+                if sku_limpio in vistos_skus:
                     continue
-                vistos_skus.add(sku)
+                vistos_skus.add(sku_limpio)
 
-                nombre = slug.replace("-", " ").title()
+                # Descodificar caracteres especiales (como %C3%A9 en Pokémon)
+                slug_limpio = urllib.parse.unquote(slug)
+                nombre = slug_limpio.replace("-", " ").title()
                 texto = nombre.lower()
 
+                # 1. Descartar juguetes/peluches
                 if any(ex in texto for ex in TERMINOS_EXCLUIDOS):
                     continue
+                # 2. Confirmar que sea de cartas/TCG
                 if any(tc in texto for tc in TERMINOS_CARTAS):
                     productos.append({
                         "tienda": "Ripley (Directo)",
-                        "id_unico": f"ripley_{sku}",
+                        "id_unico": f"ripley_{sku_limpio}",
                         "nombre": nombre,
                         "url": f"https://simple.ripley.cl{link_rel}"
                     })
             time.sleep(1)
         except Exception as e:
-            print(f"Error Ripley: {e}")
+            print(f"Error en Ripley ({url_cat}): {e}")
 
     return productos
 
+# ================= BIG BANG COPAG =================
 def consultar_bigbang():
     productos = []
     try:
@@ -166,19 +182,20 @@ def consultar_bigbang():
                     "url": f"https://bigbang.cl/products/{slug}"
                 })
     except Exception as e:
-        print(f"Error Big Bang: {e}")
+        print(f"Error en Big Bang: {e}")
 
     return productos
 
+# ================= CICLO DE REVISIÓN =================
 def ejecutar_revision():
     ahora = datetime.now().strftime("%H:%M:%S")
     print(f"[{ahora}] Escaneando tiendas...")
 
     prods_ripley = consultar_ripley()
-    print(f"[{ahora}] Ripley directo: {len(prods_ripley)} encontrados.")
+    print(f"[{ahora}] Ripley directo: {len(prods_ripley)} artículos TCG encontrados.")
 
     prods_bigbang = consultar_bigbang()
-    print(f"[{ahora}] Big Bang: {len(prods_bigbang)} encontrados.")
+    print(f"[{ahora}] Big Bang Copag: {len(prods_bigbang)} artículos TCG encontrados.")
 
     todos = prods_ripley + prods_bigbang
 
@@ -197,10 +214,10 @@ def ejecutar_revision():
     if primera_vez:
         print(f"Registro inicial con {len(vistos)} productos.")
         enviar_telegram(
-            f"✅ *Monitor Pokémon Activo (GitHub Actions)*\n\n"
-            f"• *Ripley directo:* {len(prods_ripley)} artículos.\n"
-            f"• *Big Bang Copag:* {len(prods_bigbang)} artículos.\n\n"
-            f"El bot está vigilando en la nube y te avisará cada vez que publiquen un artículo nuevo."
+            f"✅ *Monitor Pokémon Actualizado*\n\n"
+            f"• *Ripley directo:* {len(prods_ripley)} artículos TCG encontrados.\n"
+            f"• *Big Bang Copag:* {len(prods_bigbang)} artículos TCG encontrados.\n\n"
+            f"Catálogo completo cargado. Recibirás alerta de cualquier publicación nueva."
         )
         return
 
@@ -216,7 +233,6 @@ def ejecutar_revision():
         time.sleep(1)
 
 if __name__ == "__main__":
-    print("Iniciando Monitor Pokémon...")
     if EN_GITHUB_ACTIONS:
         ejecutar_revision()
     else:
