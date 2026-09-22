@@ -12,8 +12,8 @@ TELEGRAM_CHAT_ID = "1763326840"
 INTERVALO_MINUTOS = 5
 
 EN_GITHUB_ACTIONS = os.environ.get("GITHUB_ACTIONS") == "true"
+ES_EJECUCION_MANUAL = os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch"
 
-# Búsqueda completa: listado de cartas + catálogo de la marca POKÉMON en juguetería
 RIPLEY_URLS = [
     "https://simple.ripley.cl/s/list/cartas-pokemon?page=1",
     "https://simple.ripley.cl/s/list/cartas-pokemon?page=2",
@@ -28,11 +28,10 @@ BIGBANG_HTML_URL = "https://bigbang.cl/collections/pokemon-tcg"
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,/;q=0.8",
     "Accept-Language": "es-CL,es;q=0.9,en;q=0.8",
 }
 
-# Términos completos de TCG / Cartas en inglés y español
 TERMINOS_CARTAS = [
     "carta", "cartas", "tcg", "booster", "blister", "trainer",
     "entrenador", "etb", "sobre", "sobres", "trading", "lata",
@@ -41,7 +40,6 @@ TERMINOS_CARTAS = [
     "toolkit", "binder", "album", "álbum"
 ]
 
-# Exclusiones estrictas para evitar peluches y otros juguetes ajenos
 TERMINOS_EXCLUIDOS = [
     "peluche", "peluches", "plush", "mochila", "polera", "poleron",
     "polerón", "pijama", "gorro", "disfraz", "multipack figuras",
@@ -49,7 +47,7 @@ TERMINOS_EXCLUIDOS = [
 ]
 
 def obtener_ruta_historial():
-    base_dir = os.path.dirname(os.path.abspath(__file__)) if "__file__" in locals() else os.getcwd()
+    base_dir = os.path.dirname(os.path.abspath(_file)) if "file_" in locals() else os.getcwd()
     ruta_local = os.path.join(base_dir, "vistos.json")
     try:
         test_file = os.path.join(base_dir, ".test_perm")
@@ -62,16 +60,21 @@ def obtener_ruta_historial():
 
 ARCHIVO_HISTORIAL = obtener_ruta_historial()
 
+def escape_html(texto):
+    return str(texto).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
 def enviar_telegram(mensaje):
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     payload = {
         "chat_id": TELEGRAM_CHAT_ID,
         "text": mensaje,
-        "parse_mode": "Markdown",
+        "parse_mode": "HTML",
         "disable_web_page_preview": False
     }
     try:
         r = requests.post(url, json=payload, timeout=10)
+        if r.status_code != 200:
+            print(f"Error Telegram: {r.status_code} - {r.text}")
         return r.status_code == 200
     except Exception as e:
         print(f"Error enviando a Telegram: {e}")
@@ -93,10 +96,8 @@ def guardar_vistos(vistos):
     except Exception as e:
         print(f"Error guardando historial: {e}")
 
-# ================= RIPLEY =================
 def consultar_ripley():
     productos = []
-    # Captura cualquier URL directa de Ripley terminada en código numérico + 'p'
     patron = r'(/([^\"\'\s<>]+?)-(\d{8,15}[pP]))(?:[\?\"\'&\s>]|$)'
     vistos_skus = set()
 
@@ -112,15 +113,12 @@ def consultar_ripley():
                     continue
                 vistos_skus.add(sku_limpio)
 
-                # Descodificar caracteres especiales (como %C3%A9 en Pokémon)
                 slug_limpio = urllib.parse.unquote(slug)
                 nombre = slug_limpio.replace("-", " ").title()
                 texto = nombre.lower()
 
-                # 1. Descartar juguetes/peluches
                 if any(ex in texto for ex in TERMINOS_EXCLUIDOS):
                     continue
-                # 2. Confirmar que sea de cartas/TCG
                 if any(tc in texto for tc in TERMINOS_CARTAS):
                     productos.append({
                         "tienda": "Ripley (Directo)",
@@ -134,7 +132,6 @@ def consultar_ripley():
 
     return productos
 
-# ================= BIG BANG COPAG =================
 def consultar_bigbang():
     productos = []
     try:
@@ -186,16 +183,15 @@ def consultar_bigbang():
 
     return productos
 
-# ================= CICLO DE REVISIÓN =================
 def ejecutar_revision():
     ahora = datetime.now().strftime("%H:%M:%S")
     print(f"[{ahora}] Escaneando tiendas...")
 
     prods_ripley = consultar_ripley()
-    print(f"[{ahora}] Ripley directo: {len(prods_ripley)} artículos TCG encontrados.")
+    print(f"[{ahora}] Ripley directo: {len(prods_ripley)} artículos TCG.")
 
     prods_bigbang = consultar_bigbang()
-    print(f"[{ahora}] Big Bang Copag: {len(prods_bigbang)} artículos TCG encontrados.")
+    print(f"[{ahora}] Big Bang Copag: {len(prods_bigbang)} artículos TCG.")
 
     todos = prods_ripley + prods_bigbang
 
@@ -211,28 +207,39 @@ def ejecutar_revision():
 
     guardar_vistos(vistos)
 
-    if primera_vez:
-        print(f"Registro inicial con {len(vistos)} productos.")
+    # 1. Si es ejecución manual (clic en Run workflow), siempre enviar mensaje de estado
+    if ES_EJECUCION_MANUAL:
         enviar_telegram(
-            f"✅ *Monitor Pokémon Actualizado*\n\n"
-            f"• *Ripley directo:* {len(prods_ripley)} artículos TCG encontrados.\n"
-            f"• *Big Bang Copag:* {len(prods_bigbang)} artículos TCG encontrados.\n\n"
-            f"Catálogo completo cargado. Recibirás alerta de cualquier publicación nueva."
+            f"🟢 <b>Monitor Pokémon Activo (Verificación manual)</b>\n\n"
+            f"• <b>Ripley directo:</b> {len(prods_ripley)} artículos TCG vigilados.\n"
+            f"• <b>Big Bang Copag:</b> {len(prods_bigbang)} artículos TCG vigilados.\n"
+            f"• <b>Novedades en este escaneo:</b> {len(nuevos)}\n\n"
+            f"El bot está funcionando correctamente en los servidores de GitHub."
         )
-        return
 
+    # 2. Si es la primera vez absoluta que corre
+    elif primera_vez:
+        enviar_telegram(
+            f"✅ <b>Monitor Pokémon Iniciado</b>\n\n"
+            f"• <b>Ripley directo:</b> {len(prods_ripley)} artículos registrados.\n"
+            f"• <b>Big Bang Copag:</b> {len(prods_bigbang)} artículos registrados.\n\n"
+            f"Vigilando en la nube 24/7. Te avisaré ante cualquier novedad."
+        )
+
+    # 3. Notificar productos nuevos si los hay
     for p in nuevos:
-        precio_texto = f"\n💰 *Precio:* {p['precio']}" if "precio" in p else ""
+        nombre_safe = escape_html(p['nombre'])
+        precio_texto = f"\n💰 <b>Precio:</b> {escape_html(p['precio'])}" if "precio" in p else ""
         mensaje = (
-            f"🚨 *¡Nuevo producto en {p['tienda']}!*\n\n"
-            f"📦 *Producto:* {p['nombre']}"
+            f"🚨 <b>¡Nuevo producto en {escape_html(p['tienda'])}!</b>\n\n"
+            f"📦 <b>Producto:</b> {nombre_safe}"
             f"{precio_texto}\n"
-            f"🔗 *Enlace:* [Ver producto]({p['url']})"
+            f"🔗 <a href=\"{p['url']}\">Ver en la tienda</a>"
         )
         enviar_telegram(mensaje)
         time.sleep(1)
 
-if __name__ == "__main__":
+if _name_ == "_main_":
     if EN_GITHUB_ACTIONS:
         ejecutar_revision()
     else:
