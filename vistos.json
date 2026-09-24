@@ -1,25 +1,94 @@
-[
-  "bigbang_7515038613573",
-  "bigbang_7727697166405",
-  "bigbang_7756438896709",
-  "bigbang_7793149247557",
-  "bigbang_7879339900997",
-  "bigbang_7883807424581",
-  "bigbang_7883820269637",
-  "bigbang_7883831115845",
-  "bigbang_7883831345221",
-  "bigbang_7978848124997",
-  "bigbang_8237164068933",
-  "bigbang_8237175996485",
-  "bigbang_8237193887813",
-  "bigbang_8237208469573",
-  "bigbang_8278826811461",
-  "bigbang_8278827565125",
-  "bigbang_8278834905157",
-  "bigbang_8278845587525",
-  "bigbang_8278882189381",
-  "bigbang_8279165108293",
-  "bigbang_8279177199685",
-  "bigbang_8279182835781",
-  "bigbang_8279187456069"
-]
+{
+  "bigbang_7515038613573": {
+    "disponible": true,
+    "precio": "$40.990"
+  },
+  "bigbang_7727697166405": {
+    "disponible": false,
+    "precio": "$25.990"
+  },
+  "bigbang_7756438896709": {
+    "disponible": false,
+    "precio": "$19.990"
+  },
+  "bigbang_7793149247557": {
+    "disponible": false,
+    "precio": "$18.990"
+  },
+  "bigbang_7879339900997": {
+    "disponible": true,
+    "precio": "$169.990"
+  },
+  "bigbang_7883807424581": {
+    "disponible": false,
+    "precio": "$29.990"
+  },
+  "bigbang_7883820269637": {
+    "disponible": true,
+    "precio": "$109.990"
+  },
+  "bigbang_7883831115845": {
+    "disponible": false,
+    "precio": "$55.990"
+  },
+  "bigbang_7883831345221": {
+    "disponible": true,
+    "precio": "$50.990"
+  },
+  "bigbang_7978848124997": {
+    "disponible": true,
+    "precio": "$20.990"
+  },
+  "bigbang_8237164068933": {
+    "disponible": false,
+    "precio": "$28.990"
+  },
+  "bigbang_8237175996485": {
+    "disponible": true,
+    "precio": "$51.990"
+  },
+  "bigbang_8237193887813": {
+    "disponible": false,
+    "precio": "$25.990"
+  },
+  "bigbang_8237208469573": {
+    "disponible": false,
+    "precio": "$20.990"
+  },
+  "bigbang_8278826811461": {
+    "disponible": false,
+    "precio": "$34.990"
+  },
+  "bigbang_8278827565125": {
+    "disponible": false,
+    "precio": "$31.990"
+  },
+  "bigbang_8278834905157": {
+    "disponible": false,
+    "precio": "$31.990"
+  },
+  "bigbang_8278845587525": {
+    "disponible": false,
+    "precio": "$28.990"
+  },
+  "bigbang_8278882189381": {
+    "disponible": false,
+    "precio": "$39.990"
+  },
+  "bigbang_8279165108293": {
+    "disponible": false,
+    "precio": "$29.990"
+  },
+  "bigbang_8279177199685": {
+    "disponible": true,
+    "precio": "$32.990"
+  },
+  "bigbang_8279182835781": {
+    "disponible": true,
+    "precio": "$36.990"
+  },
+  "bigbang_8279187456069": {
+    "disponible": true,
+    "precio": "$25.990"
+  }
+}
