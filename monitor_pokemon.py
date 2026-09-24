@@ -71,19 +71,23 @@ def enviar_telegram(mensaje):
         print(f"Error enviando a Telegram: {e}")
         return False
 
-def cargar_vistos():
+def cargar_historial():
     if os.path.exists(ARCHIVO_HISTORIAL):
         try:
             with open(ARCHIVO_HISTORIAL, "r", encoding="utf-8") as f:
-                return set(json.load(f))
-        except Exception:
-            return set()
-    return set()
+                data = json.load(f)
+                if isinstance(data, dict):
+                    return data
+                elif isinstance(data, list):
+                    return {k: {"disponible": True} for k in data}
+        except Exception as e:
+            print(f"Aviso cargando historial: {e}")
+    return {}
 
-def guardar_vistos(vistos):
+def guardar_historial(estado):
     try:
         with open(ARCHIVO_HISTORIAL, "w", encoding="utf-8") as f:
-            json.dump(sorted(list(vistos)), f, ensure_ascii=False, indent=2)
+            json.dump(estado, f, ensure_ascii=False, indent=2)
     except Exception as e:
         print(f"Error guardando historial: {e}")
 
@@ -116,6 +120,8 @@ def consultar_ripley():
                         "tienda": "Ripley (Directo)",
                         "id_unico": f"ripley_{sku_limpio}",
                         "nombre": nombre,
+                        "precio": "Ver precio en Ripley",
+                        "disponible": True,
                         "url": f"https://simple.ripley.cl{link_rel}"
                     })
             time.sleep(1)
@@ -127,6 +133,7 @@ def consultar_ripley():
 # ================= BIG BANG COPAG =================
 def consultar_bigbang():
     productos = []
+    # 1. API JSON de Shopify (detecta con exactitud si tiene stock o está agotado)
     try:
         res = requests.get(BIGBANG_JSON_URL, headers=HEADERS, timeout=20)
         if res.status_code == 200:
@@ -135,6 +142,8 @@ def consultar_bigbang():
                 handle = prod.get("handle", "")
                 titulo = prod.get("title", "")
                 variantes = prod.get("variants", [])
+                
+                disponible = any(v.get("available", False) for v in variantes)
                 precio_str = "Consultar"
                 if variantes:
                     try:
@@ -148,6 +157,7 @@ def consultar_bigbang():
                     "id_unico": f"bigbang_{prod.get('id', handle)}",
                     "nombre": titulo,
                     "precio": precio_str,
+                    "disponible": disponible,
                     "url": f"https://bigbang.cl/products/{handle}"
                 })
             if productos:
@@ -155,6 +165,7 @@ def consultar_bigbang():
     except Exception:
         pass
 
+    # 2. Respaldo por HTML
     try:
         res = requests.get(BIGBANG_HTML_URL, headers=HEADERS, timeout=20)
         if res.status_code == 200:
@@ -169,6 +180,7 @@ def consultar_bigbang():
                     "id_unico": f"bigbang_{slug}",
                     "nombre": slug.replace("-", " ").title(),
                     "precio": "Ver en tienda",
+                    "disponible": True,
                     "url": f"https://bigbang.cl/products/{slug}"
                 })
     except Exception as e:
@@ -176,61 +188,103 @@ def consultar_bigbang():
 
     return productos
 
-# ================= CICLO DE REVISIÓN =================
+# ================= REVISIÓN Y DETECCIÓN =================
 def ejecutar_revision():
     ahora = datetime.now().strftime("%H:%M:%S")
-    print(f"[{ahora}] Escaneando tiendas...")
+    print(f"[{ahora}] Escaneando tiendas (Nuevos + Restock)...")
 
     prods_ripley = consultar_ripley()
     print(f"[{ahora}] Ripley directo: {len(prods_ripley)} artículos TCG.")
 
     prods_bigbang = consultar_bigbang()
-    print(f"[{ahora}] Big Bang Copag: {len(prods_bigbang)} artículos TCG.")
+    bb_disp = sum(1 for p in prods_bigbang if p["disponible"])
+    bb_agotados = len(prods_bigbang) - bb_disp
+    print(f"[{ahora}] Big Bang Copag: {len(prods_bigbang)} artículos ({bb_disp} en stock, {bb_agotados} agotados).")
 
     todos = prods_ripley + prods_bigbang
+    historial = cargar_historial()
+    primera_vez = len(historial) == 0
 
-    vistos = cargar_vistos()
-    primera_vez = len(vistos) == 0
     nuevos = []
+    restocks = []
+    skus_ripley_ahora = set()
 
     for p in todos:
         uid = p["id_unico"]
-        if uid not in vistos:
-            vistos.add(uid)
+        if p["tienda"].startswith("Ripley"):
+            skus_ripley_ahora.add(uid)
+
+        if uid not in historial:
+            # Producto nuevo
             nuevos.append(p)
+            historial[uid] = {
+                "nombre": p["nombre"],
+                "precio": p["precio"],
+                "disponible": p["disponible"],
+                "tienda": p["tienda"],
+                "url": p["url"]
+            }
+        else:
+            # Producto conocido: verificar si volvió a tener stock
+            estaba_disponible = historial[uid].get("disponible", False)
+            esta_ahora_disponible = p["disponible"]
 
-    guardar_vistos(vistos)
+            if not estaba_disponible and esta_ahora_disponible:
+                restocks.append(p)
 
-    # 1. Mensaje en ejecución manual
+            historial[uid]["disponible"] = esta_ahora_disponible
+            historial[uid]["precio"] = p["precio"]
+
+    # Para Ripley: si un producto conocido desapareció de la búsqueda, marcar como sin stock
+    for uid in list(historial.keys()):
+        if uid.startswith("ripley_") and uid not in skus_ripley_ahora:
+            historial[uid]["disponible"] = False
+
+    guardar_historial(historial)
+
+    # 1. Alerta de Verificación Manual (al hacer clic en Run workflow)
     if ES_EJECUCION_MANUAL:
         enviar_telegram(
             f"🟢 <b>Monitor Pokémon Activo (Verificación manual)</b>\n\n"
-            f"• <b>Ripley directo:</b> {len(prods_ripley)} artículos TCG vigilados.\n"
-            f"• <b>Big Bang Copag:</b> {len(prods_bigbang)} artículos TCG vigilados.\n"
-            f"• <b>Novedades en este escaneo:</b> {len(nuevos)}\n\n"
-            f"El bot está funcionando correctamente en los servidores de GitHub."
+            f"• <b>Ripley directo:</b> {len(prods_ripley)} artículos vigilados.\n"
+            f"• <b>Big Bang Copag:</b> {len(prods_bigbang)} artículos ({bb_disp} en stock, {bb_agotados} agotados bajo vigilancia de restock).\n"
+            f"• <b>Nuevas publicaciones:</b> {len(nuevos)}\n"
+            f"• <b>Restocks detectados:</b> {len(restocks)}\n\n"
+            f"Sistema activo 24/7 en la nube con alertas de nuevo stock."
         )
 
-    # 2. Mensaje si es primera vez absoluta
+    # 2. Mensaje si es la primera vez absoluta
     elif primera_vez:
         enviar_telegram(
-            f"✅ <b>Monitor Pokémon Iniciado</b>\n\n"
+            f"✅ <b>Monitor Pokémon Activado (Nuevos + Restock)</b>\n\n"
             f"• <b>Ripley directo:</b> {len(prods_ripley)} artículos registrados.\n"
-            f"• <b>Big Bang Copag:</b> {len(prods_bigbang)} artículos registrados.\n\n"
-            f"Vigilando en la nube 24/7. Te avisaré ante cualquier novedad."
+            f"• <b>Big Bang Copag:</b> {len(prods_bigbang)} artículos registrados ({bb_agotados} agotados bajo vigilancia de stock).\n\n"
+            f"Te avisaré ante publicaciones nuevas o cuando repongan stock de artículos agotados."
         )
 
-    # 3. Notificaciones de artículos nuevos
+    # 3. Notificar Restocks (productos que volvieron a tener stock)
+    for p in restocks:
+        msg = (
+            f"🔄 <b>¡RESTOCK en {escape_html(p['tienda'])}!</b> (Volvió a tener stock)\n\n"
+            f"📦 <b>Producto:</b> {escape_html(p['nombre'])}\n"
+            f"💰 <b>Precio:</b> {escape_html(p['precio'])}\n"
+            f"✅ <b>Estado:</b> ¡Disponible para compra ahora!\n"
+            f"🔗 <a href=\"{p['url']}\">Ir a comprar</a>"
+        )
+        enviar_telegram(msg)
+        time.sleep(1)
+
+    # 4. Notificar Productos Nuevos publicados
     for p in nuevos:
-        nombre_safe = escape_html(p['nombre'])
-        precio_texto = f"\n💰 <b>Precio:</b> {escape_html(p['precio'])}" if "precio" in p else ""
-        mensaje = (
+        estado_disp = "✅ Disponible" if p["disponible"] else "⚠️ Agotado / Preventa"
+        msg = (
             f"🚨 <b>¡Nuevo producto en {escape_html(p['tienda'])}!</b>\n\n"
-            f"📦 <b>Producto:</b> {nombre_safe}"
-            f"{precio_texto}\n"
+            f"📦 <b>Producto:</b> {escape_html(p['nombre'])}\n"
+            f"💰 <b>Precio:</b> {escape_html(p['precio'])}\n"
+            f"📌 <b>Stock:</b> {estado_disp}\n"
             f"🔗 <a href=\"{p['url']}\">Ver en la tienda</a>"
         )
-        enviar_telegram(mensaje)
+        enviar_telegram(msg)
         time.sleep(1)
 
 # ================= EJECUCIÓN DEL SCRIPT =================
@@ -244,4 +298,3 @@ else:
             time.sleep(INTERVALO_MINUTOS * 60)
     except KeyboardInterrupt:
         print("Detenido.")
-  
