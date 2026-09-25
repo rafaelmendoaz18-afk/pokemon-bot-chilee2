@@ -15,7 +15,7 @@ EN_GITHUB_ACTIONS = os.environ.get("GITHUB_ACTIONS") == "true"
 ES_EJECUCION_MANUAL = os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch"
 ARCHIVO_HISTORIAL = "vistos.json"
 
-# ================= URLS DE LAS 5 TIENDAS =================
+# ================= URLS DE LAS TIENDAS =================
 RIPLEY_URLS = [
     "https://simple.ripley.cl/s/list/cartas-pokemon?page=1",
     "https://simple.ripley.cl/s/list/cartas-pokemon?page=2",
@@ -33,14 +33,27 @@ FALABELLA_URLS = [
     "https://www.falabella.com/falabella-cl/search?Ntt=pokemon+tcg&f.DerivedProduct.pt_seller=FALABELLA",
 ]
 
+# Rutas corregidas para Paris
 PARIS_URLS = [
-    "https://www.paris.cl/jugueteria/juegos-de-mesa/cartas-coleccionables/?prefn1=brand&prefv1=Pok%C3%A9mon",
-    "https://www.paris.cl/search?q=cartas+pokemon",
+    "https://www.paris.cl/juguetes/didacticos-y-recreativos/juegos-de-mesa/?prefn1=brand&prefv1=Pok%C3%A9mon",
+    "https://www.paris.cl/juguetes/didacticos-y-recreativos/juegos-de-mesa/?prefn1=brand&prefv1=Pok%C3%A9mon&start=0&sz=40",
+    "https://www.paris.cl/listas/cartas-pokemon/",
 ]
 
 LIDER_URLS = [
     "https://www.lider.cl/catalogo/v/cartas-pokemon?f.seller=Lider",
     "https://www.lider.cl/catalogo/v/precio-cartas-pokemon?f.seller=Lider",
+]
+
+# PRODUCTOS DE ALTA DEMANDA PARA VIGILANCIA DIRECTA (incluso si la tienda los oculta del buscador)
+PRODUCTOS_VIGILANCIA_DIRECTA = [
+    {
+        "tienda": "Paris (Directo)",
+        "id_unico": "paris_574897999",
+        "nombre": "Juego de Cartas Pokémon 30Th Elite Trainer Box English",
+        "url": "https://www.paris.cl/juego-de-cartas-pokemon-30th-elite-trainer-box-english-574897999.html",
+        "precio": "$79.990"
+    }
 ]
 
 HEADERS = {
@@ -49,7 +62,6 @@ HEADERS = {
     "Accept-Language": "es-CL,es;q=0.9,en;q=0.8",
 }
 
-# Términos de cartas coleccionables
 TERMINOS_CARTAS = [
     "carta", "cartas", "tcg", "booster", "blister", "trainer",
     "entrenador", "etb", "sobre", "sobres", "trading", "lata",
@@ -58,7 +70,6 @@ TERMINOS_CARTAS = [
     "toolkit", "binder", "album", "álbum"
 ]
 
-# Exclusiones de peluches y juguetes ajenos
 TERMINOS_EXCLUIDOS = [
     "peluche", "peluches", "plush", "mochila", "polera", "poleron",
     "polerón", "pijama", "gorro", "disfraz", "multipack figuras",
@@ -105,7 +116,7 @@ def guardar_historial(estado):
     except Exception as e:
         print(f"Error guardando historial: {e}")
 
-# ================= 1. RIPLEY =================
+# ================= RIPLEY =================
 def consultar_ripley():
     productos = []
     patron = r'(/([^\"\'\s<>]+?)-(\d{8,15}[pP]))(?:[\?\"\'&\s>]|$)'
@@ -144,7 +155,7 @@ def consultar_ripley():
 
     return productos
 
-# ================= 2. BIG BANG COPAG =================
+# ================= BIG BANG COPAG =================
 def consultar_bigbang():
     productos = []
     try:
@@ -200,7 +211,7 @@ def consultar_bigbang():
 
     return productos
 
-# ================= 3. FALABELLA =================
+# ================= FALABELLA =================
 def consultar_falabella():
     productos = []
     patron = r'(/falabella-cl/product/(\d+)/([^/\"\'\?]+)/(\d+))'
@@ -239,11 +250,11 @@ def consultar_falabella():
 
     return productos
 
-# ================= 4. PARIS =================
+# ================= PARIS =================
 def consultar_paris():
     productos = []
-    # SKUs directos de Paris: 9 dígitos numéricos terminados en .html (sin códigos MK/MP)
-    patron = r'(/([a-zA-Z0-9\-]+)-(\d{9})\.html)'
+    # Soporta enlaces largos (/nombre-574897999.html) y cortos (/574897999.html)
+    patron = r'(/(([a-zA-Z0-9\-]+)-)?(\d{9})\.html)'
     vistos_skus = set()
 
     for url_cat in PARIS_URLS:
@@ -252,18 +263,21 @@ def consultar_paris():
             if res.status_code != 200:
                 continue
 
-            for link_rel, slug, sku in re.findall(patron, res.text):
+            for link_rel, _, slug, sku in re.findall(patron, res.text):
                 if sku in vistos_skus:
                     continue
                 vistos_skus.add(sku)
 
-                slug_limpio = urllib.parse.unquote(slug)
-                nombre = slug_limpio.replace("-", " ").title()
+                slug_limpio = urllib.parse.unquote(slug or "")
+                if slug_limpio.lower().startswith("mk"):
+                    continue
+
+                nombre = slug_limpio.replace("-", " ").title() if slug_limpio else f"Producto Paris {sku}"
                 texto = nombre.lower()
 
                 if any(ex in texto for ex in TERMINOS_EXCLUIDOS):
                     continue
-                if any(tc in texto for tc in TERMINOS_CARTAS):
+                if not slug_limpio or any(tc in texto for tc in TERMINOS_CARTAS) or "pokemon" in texto:
                     productos.append({
                         "tienda": "Paris (Directo)",
                         "id_unico": f"paris_{sku}",
@@ -278,7 +292,7 @@ def consultar_paris():
 
     return productos
 
-# ================= 5. LÍDER =================
+# ================= LÍDER =================
 def consultar_lider():
     productos = []
     patron = r'(/catalogo/product/sku/(\d+)/([^/\"\'\?]+)|/product/sku/(\d+)/([^/\"\'\?]+))'
@@ -318,42 +332,64 @@ def consultar_lider():
 
     return productos
 
-# ================= REVISIÓN Y DETECCIÓN =================
+# ================= VIGILANCIA DIRECTA =================
+def consultar_productos_directos():
+    """Consulta fichas específicas que se agotan rápido o que la tienda oculta de los buscadores."""
+    resultados = []
+    for item in PRODUCTOS_VIGILANCIA_DIRECTA:
+        try:
+            res = requests.get(item["url"], headers=HEADERS, timeout=15)
+            if res.status_code == 200:
+                html_lower = res.text.lower()
+                # Verificar si está agotado
+                esta_agotado = any(frase in html_lower for frase in ["agotado", "sin stock", "producto no disponible", "no disponible"])
+                disponible = not esta_agotado
+
+                resultados.append({
+                    "tienda": item["tienda"],
+                    "id_unico": item["id_unico"],
+                    "nombre": item["nombre"],
+                    "precio": item.get("precio", "Ver precio"),
+                    "disponible": disponible,
+                    "url": item["url"]
+                })
+            time.sleep(1)
+        except Exception as e:
+            print(f"Error en producto directo {item['url']}: {e}")
+    return resultados
+
+# ================= CICLO PRINCIPAL =================
 def ejecutar_revision():
     ahora = datetime.now().strftime("%H:%M:%S")
-    print(f"[{ahora}] Escaneando las 5 tiendas chilenas...")
+    print(f"[{ahora}] Escaneando tiendas y lista de vigilancia...")
 
     prods_ripley = consultar_ripley()
-    print(f"[{ahora}] Ripley directo: {len(prods_ripley)} artículos TCG.")
-
     prods_bigbang = consultar_bigbang()
-    bb_disp = sum(1 for p in prods_bigbang if p["disponible"])
-    bb_agotados = len(prods_bigbang) - bb_disp
-    print(f"[{ahora}] Big Bang Copag: {len(prods_bigbang)} artículos ({bb_disp} en stock, {bb_agotados} agotados).")
-
     prods_falabella = consultar_falabella()
-    print(f"[{ahora}] Falabella directo: {len(prods_falabella)} artículos TCG.")
-
     prods_paris = consultar_paris()
-    print(f"[{ahora}] Paris directo: {len(prods_paris)} artículos TCG.")
-
     prods_lider = consultar_lider()
-    print(f"[{ahora}] Líder directo: {len(prods_lider)} artículos TCG.")
+    prods_directos = consultar_productos_directos()
 
     todos = prods_ripley + prods_bigbang + prods_falabella + prods_paris + prods_lider
+
+    # Sobrescribir con la información más precisa de vigilancia directa
+    skus_directos = {p["id_unico"]: p for p in prods_directos}
+    for i, p in enumerate(todos):
+        if p["id_unico"] in skus_directos:
+            todos[i] = skus_directos.pop(p["id_unico"])
+    todos.extend(skus_directos.values())
 
     historial = cargar_historial()
     primera_vez = len(historial) == 0
 
     nuevos = []
     restocks = []
-    skus_activos_ahora = {p["id_unico"] for p in todos}
+    skus_activos_ahora = {p["id_unico"] for p in todos if p.get("disponible", True)}
 
     for p in todos:
         uid = p["id_unico"]
 
         if uid not in historial:
-            # Producto totalmente nuevo
             nuevos.append(p)
             historial[uid] = {
                 "nombre": p["nombre"],
@@ -363,63 +399,58 @@ def ejecutar_revision():
                 "url": p["url"]
             }
         else:
-            # Producto ya conocido: verificar si volvió a tener stock (Restock)
             estaba_disponible = historial[uid].get("disponible", False)
             esta_ahora_disponible = p["disponible"]
 
+            # Si estaba sin stock y ahora está disponible -> ALERTA DE RESTOCK
             if not estaba_disponible and esta_ahora_disponible:
                 restocks.append(p)
 
             historial[uid]["disponible"] = esta_ahora_disponible
             historial[uid]["precio"] = p["precio"]
 
-    # Marcar como sin stock si desapareció del catálogo de retail
+    # Para tiendas que ocultan productos agotados del buscador
     for uid in list(historial.keys()):
-        if not uid.startswith("bigbang_") and uid not in skus_activos_ahora:
+        if uid not in skus_activos_ahora:
             historial[uid]["disponible"] = False
 
     guardar_historial(historial)
 
-    # 1. Alerta de Verificación Manual (al presionar Run workflow)
+    # 1. Verificación manual (clic en Run workflow)
     if ES_EJECUCION_MANUAL:
         enviar_telegram(
             f"🟢 <b>Monitor Pokémon Activo (Verificación manual)</b>\n\n"
-            f"• <b>Ripley directo:</b> {len(prods_ripley)} artículos\n"
-            f"• <b>Big Bang:</b> {len(prods_bigbang)} artículos ({bb_disp} en stock, {bb_agotados} agotados)\n"
-            f"• <b>Falabella directo:</b> {len(prods_falabella)} artículos\n"
-            f"• <b>Paris directo:</b> {len(prods_paris)} artículos\n"
-            f"• <b>Líder directo:</b> {len(prods_lider)} artículos\n\n"
-            f"• <b>Novedades en este escaneo:</b> {len(nuevos)}\n"
+            f"• <b>Ripley:</b> {len(prods_ripley)} artículos\n"
+            f"• <b>Big Bang:</b> {len(prods_bigbang)} artículos\n"
+            f"• <b>Falabella:</b> {len(prods_falabella)} artículos\n"
+            f"• <b>Paris:</b> {len(prods_paris)} artículos (incluye ETB 30th)\n"
+            f"• <b>Líder:</b> {len(prods_lider)} artículos\n\n"
+            f"• <b>Nuevas publicaciones:</b> {len(nuevos)}\n"
             f"• <b>Restocks detectados:</b> {len(restocks)}\n\n"
-            f"Vigilando 24/7 en la nube las 5 tiendas."
+            f"Vigilancia directa de stock activa en las 5 tiendas."
         )
 
     # 2. Mensaje en la primera ejecución
     elif primera_vez:
         enviar_telegram(
-            f"✅ <b>Monitor Pokémon Multi-Tienda Activado</b>\n\n"
-            f"Vigilando solo productos directos (sin Marketplace):\n"
-            f"• Ripley: {len(prods_ripley)}\n"
-            f"• Big Bang Copag: {len(prods_bigbang)}\n"
-            f"• Falabella: {len(prods_falabella)}\n"
-            f"• Paris: {len(prods_paris)}\n"
-            f"• Líder: {len(prods_lider)}\n\n"
-            f"Te avisaré ante cualquier publicación nueva o reposición de stock (Restock)."
+            f"✅ <b>Monitor Pokémon Multi-Tienda Actualizado</b>\n\n"
+            f"Se cargó el catálogo de las 5 tiendas chilenas.\n"
+            f"Incluye vigilancia directa de restock para la ETB 30th Aniversario de Paris."
         )
 
-    # 3. Notificar Restocks (Volvieron a tener stock)
+    # 3. Notificar Restocks
     for p in restocks:
         msg = (
             f"🔄 <b>¡RESTOCK en {escape_html(p['tienda'])}!</b> (Volvió a tener stock)\n\n"
             f"📦 <b>Producto:</b> {escape_html(p['nombre'])}\n"
             f"💰 <b>Precio:</b> {escape_html(p['precio'])}\n"
             f"✅ <b>Estado:</b> ¡Disponible para compra ahora!\n"
-            f"🔗 <a href=\"{p['url']}\">Ir a comprar</a>"
+            f"🔗 <a href=\"{p['url']}\">Ir a comprar en {escape_html(p['tienda'])}</a>"
         )
         enviar_telegram(msg)
         time.sleep(1)
 
-    # 4. Notificar Productos Nuevos publicados
+    # 4. Notificar Productos Nuevos
     for p in nuevos:
         estado_disp = "✅ Con stock" if p["disponible"] else "⚠️ Sin stock / Preventa"
         msg = (
