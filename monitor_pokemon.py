@@ -15,7 +15,7 @@ EN_GITHUB_ACTIONS = os.environ.get("GITHUB_ACTIONS") == "true"
 ES_EJECUCION_MANUAL = os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch"
 ARCHIVO_HISTORIAL = "vistos.json"
 
-# Cobertura completa de Ripley: listado de cartas y catálogo de marca POKÉMON
+# ================= URLS DE LAS 5 TIENDAS =================
 RIPLEY_URLS = [
     "https://simple.ripley.cl/s/list/cartas-pokemon?page=1",
     "https://simple.ripley.cl/s/list/cartas-pokemon?page=2",
@@ -25,9 +25,23 @@ RIPLEY_URLS = [
     "https://simple.ripley.cl/jugueteria-y-ninos/juguetes?page=3&brand=POKEMON",
 ]
 
-# Rutas de Big Bang Copag
 BIGBANG_JSON_URL = "https://bigbang.cl/collections/pokemon-tcg/products.json?limit=250"
 BIGBANG_HTML_URL = "https://bigbang.cl/collections/pokemon-tcg"
+
+FALABELLA_URLS = [
+    "https://www.falabella.com/falabella-cl/search?Ntt=cartas+pokemon&f.DerivedProduct.pt_seller=FALABELLA",
+    "https://www.falabella.com/falabella-cl/search?Ntt=pokemon+tcg&f.DerivedProduct.pt_seller=FALABELLA",
+]
+
+PARIS_URLS = [
+    "https://www.paris.cl/jugueteria/juegos-de-mesa/cartas-coleccionables/?prefn1=brand&prefv1=Pok%C3%A9mon",
+    "https://www.paris.cl/search?q=cartas+pokemon",
+]
+
+LIDER_URLS = [
+    "https://www.lider.cl/catalogo/v/cartas-pokemon?f.seller=Lider",
+    "https://www.lider.cl/catalogo/v/precio-cartas-pokemon?f.seller=Lider",
+]
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
@@ -44,7 +58,7 @@ TERMINOS_CARTAS = [
     "toolkit", "binder", "album", "álbum"
 ]
 
-# Exclusiones de peluches y otros juguetes
+# Exclusiones de peluches y juguetes ajenos
 TERMINOS_EXCLUIDOS = [
     "peluche", "peluches", "plush", "mochila", "polera", "poleron",
     "polerón", "pijama", "gorro", "disfraz", "multipack figuras",
@@ -91,7 +105,7 @@ def guardar_historial(estado):
     except Exception as e:
         print(f"Error guardando historial: {e}")
 
-# ================= RIPLEY =================
+# ================= 1. RIPLEY =================
 def consultar_ripley():
     productos = []
     patron = r'(/([^\"\'\s<>]+?)-(\d{8,15}[pP]))(?:[\?\"\'&\s>]|$)'
@@ -120,7 +134,7 @@ def consultar_ripley():
                         "tienda": "Ripley (Directo)",
                         "id_unico": f"ripley_{sku_limpio}",
                         "nombre": nombre,
-                        "precio": "Ver precio en Ripley",
+                        "precio": "Ver en Ripley",
                         "disponible": True,
                         "url": f"https://simple.ripley.cl{link_rel}"
                     })
@@ -130,10 +144,9 @@ def consultar_ripley():
 
     return productos
 
-# ================= BIG BANG COPAG =================
+# ================= 2. BIG BANG COPAG =================
 def consultar_bigbang():
     productos = []
-    # 1. API JSON de Shopify (detecta con exactitud si tiene stock o está agotado)
     try:
         res = requests.get(BIGBANG_JSON_URL, headers=HEADERS, timeout=20)
         if res.status_code == 200:
@@ -165,7 +178,6 @@ def consultar_bigbang():
     except Exception:
         pass
 
-    # 2. Respaldo por HTML
     try:
         res = requests.get(BIGBANG_HTML_URL, headers=HEADERS, timeout=20)
         if res.status_code == 200:
@@ -188,10 +200,128 @@ def consultar_bigbang():
 
     return productos
 
+# ================= 3. FALABELLA =================
+def consultar_falabella():
+    productos = []
+    patron = r'(/falabella-cl/product/(\d+)/([^/\"\'\?]+)/(\d+))'
+    vistos_skus = set()
+
+    for url_cat in FALABELLA_URLS:
+        try:
+            res = requests.get(url_cat, headers=HEADERS, timeout=20)
+            if res.status_code != 200:
+                continue
+
+            for link_rel, sku1, slug, sku2 in re.findall(patron, res.text):
+                sku = sku1 or sku2
+                if sku in vistos_skus:
+                    continue
+                vistos_skus.add(sku)
+
+                slug_limpio = urllib.parse.unquote(slug)
+                nombre = slug_limpio.replace("-", " ").title()
+                texto = nombre.lower()
+
+                if any(ex in texto for ex in TERMINOS_EXCLUIDOS):
+                    continue
+                if any(tc in texto for tc in TERMINOS_CARTAS) or "pokemon" in texto:
+                    productos.append({
+                        "tienda": "Falabella (Directo)",
+                        "id_unico": f"falabella_{sku}",
+                        "nombre": nombre,
+                        "precio": "Ver en Falabella",
+                        "disponible": True,
+                        "url": f"https://www.falabella.com{link_rel}"
+                    })
+            time.sleep(1)
+        except Exception as e:
+            print(f"Error en Falabella ({url_cat}): {e}")
+
+    return productos
+
+# ================= 4. PARIS =================
+def consultar_paris():
+    productos = []
+    # SKUs directos de Paris: 9 dígitos numéricos terminados en .html (sin códigos MK/MP)
+    patron = r'(/([a-zA-Z0-9\-]+)-(\d{9})\.html)'
+    vistos_skus = set()
+
+    for url_cat in PARIS_URLS:
+        try:
+            res = requests.get(url_cat, headers=HEADERS, timeout=20)
+            if res.status_code != 200:
+                continue
+
+            for link_rel, slug, sku in re.findall(patron, res.text):
+                if sku in vistos_skus:
+                    continue
+                vistos_skus.add(sku)
+
+                slug_limpio = urllib.parse.unquote(slug)
+                nombre = slug_limpio.replace("-", " ").title()
+                texto = nombre.lower()
+
+                if any(ex in texto for ex in TERMINOS_EXCLUIDOS):
+                    continue
+                if any(tc in texto for tc in TERMINOS_CARTAS):
+                    productos.append({
+                        "tienda": "Paris (Directo)",
+                        "id_unico": f"paris_{sku}",
+                        "nombre": nombre,
+                        "precio": "Ver en Paris",
+                        "disponible": True,
+                        "url": f"https://www.paris.cl{link_rel}"
+                    })
+            time.sleep(1)
+        except Exception as e:
+            print(f"Error en Paris ({url_cat}): {e}")
+
+    return productos
+
+# ================= 5. LÍDER =================
+def consultar_lider():
+    productos = []
+    patron = r'(/catalogo/product/sku/(\d+)/([^/\"\'\?]+)|/product/sku/(\d+)/([^/\"\'\?]+))'
+    vistos_skus = set()
+
+    for url_cat in LIDER_URLS:
+        try:
+            res = requests.get(url_cat, headers=HEADERS, timeout=20)
+            if res.status_code != 200:
+                continue
+
+            for link_match, sku1, slug1, sku2, slug2 in re.findall(patron, res.text):
+                sku = sku1 or sku2
+                slug = slug1 or slug2
+                if sku in vistos_skus:
+                    continue
+                vistos_skus.add(sku)
+
+                slug_limpio = urllib.parse.unquote(slug)
+                nombre = slug_limpio.replace("-", " ").title()
+                texto = nombre.lower()
+
+                if any(ex in texto for ex in TERMINOS_EXCLUIDOS):
+                    continue
+                if any(tc in texto for tc in TERMINOS_CARTAS):
+                    productos.append({
+                        "tienda": "Líder (Directo)",
+                        "id_unico": f"lider_{sku}",
+                        "nombre": nombre,
+                        "precio": "Ver en Líder",
+                        "disponible": True,
+                        "url": f"https://www.lider.cl{link_match}"
+                    })
+            time.sleep(1)
+        except Exception as e:
+            print(f"Error en Líder ({url_cat}): {e}")
+
+    return productos
+
 # ================= REVISIÓN Y DETECCIÓN =================
 def ejecutar_revision():
     ahora = datetime.now().strftime("%H:%M:%S")
-    print(f"[{ahora}] Escaneando tiendas (Nuevos + Restock)...")
+    print(f"[{ahora}] Escaneando las 5 tiendas chilenas...")
 
     prods_ripley = consultar_ripley()
     print(f"[{ahora}] Ripley directo: {len(prods_ripley)} artículos TCG.")
@@ -201,21 +331,29 @@ def ejecutar_revision():
     bb_agotados = len(prods_bigbang) - bb_disp
     print(f"[{ahora}] Big Bang Copag: {len(prods_bigbang)} artículos ({bb_disp} en stock, {bb_agotados} agotados).")
 
-    todos = prods_ripley + prods_bigbang
+    prods_falabella = consultar_falabella()
+    print(f"[{ahora}] Falabella directo: {len(prods_falabella)} artículos TCG.")
+
+    prods_paris = consultar_paris()
+    print(f"[{ahora}] Paris directo: {len(prods_paris)} artículos TCG.")
+
+    prods_lider = consultar_lider()
+    print(f"[{ahora}] Líder directo: {len(prods_lider)} artículos TCG.")
+
+    todos = prods_ripley + prods_bigbang + prods_falabella + prods_paris + prods_lider
+
     historial = cargar_historial()
     primera_vez = len(historial) == 0
 
     nuevos = []
     restocks = []
-    skus_ripley_ahora = set()
+    skus_activos_ahora = {p["id_unico"] for p in todos}
 
     for p in todos:
         uid = p["id_unico"]
-        if p["tienda"].startswith("Ripley"):
-            skus_ripley_ahora.add(uid)
 
         if uid not in historial:
-            # Producto nuevo
+            # Producto totalmente nuevo
             nuevos.append(p)
             historial[uid] = {
                 "nombre": p["nombre"],
@@ -225,7 +363,7 @@ def ejecutar_revision():
                 "url": p["url"]
             }
         else:
-            # Producto conocido: verificar si volvió a tener stock
+            # Producto ya conocido: verificar si volvió a tener stock (Restock)
             estaba_disponible = historial[uid].get("disponible", False)
             esta_ahora_disponible = p["disponible"]
 
@@ -235,34 +373,41 @@ def ejecutar_revision():
             historial[uid]["disponible"] = esta_ahora_disponible
             historial[uid]["precio"] = p["precio"]
 
-    # Para Ripley: si un producto conocido desapareció de la búsqueda, marcar como sin stock
+    # Marcar como sin stock si desapareció del catálogo de retail
     for uid in list(historial.keys()):
-        if uid.startswith("ripley_") and uid not in skus_ripley_ahora:
+        if not uid.startswith("bigbang_") and uid not in skus_activos_ahora:
             historial[uid]["disponible"] = False
 
     guardar_historial(historial)
 
-    # 1. Alerta de Verificación Manual (al hacer clic en Run workflow)
+    # 1. Alerta de Verificación Manual (al presionar Run workflow)
     if ES_EJECUCION_MANUAL:
         enviar_telegram(
             f"🟢 <b>Monitor Pokémon Activo (Verificación manual)</b>\n\n"
-            f"• <b>Ripley directo:</b> {len(prods_ripley)} artículos vigilados.\n"
-            f"• <b>Big Bang Copag:</b> {len(prods_bigbang)} artículos ({bb_disp} en stock, {bb_agotados} agotados bajo vigilancia de restock).\n"
-            f"• <b>Nuevas publicaciones:</b> {len(nuevos)}\n"
+            f"• <b>Ripley directo:</b> {len(prods_ripley)} artículos\n"
+            f"• <b>Big Bang:</b> {len(prods_bigbang)} artículos ({bb_disp} en stock, {bb_agotados} agotados)\n"
+            f"• <b>Falabella directo:</b> {len(prods_falabella)} artículos\n"
+            f"• <b>Paris directo:</b> {len(prods_paris)} artículos\n"
+            f"• <b>Líder directo:</b> {len(prods_lider)} artículos\n\n"
+            f"• <b>Novedades en este escaneo:</b> {len(nuevos)}\n"
             f"• <b>Restocks detectados:</b> {len(restocks)}\n\n"
-            f"Sistema activo 24/7 en la nube con alertas de nuevo stock."
+            f"Vigilando 24/7 en la nube las 5 tiendas."
         )
 
-    # 2. Mensaje si es la primera vez absoluta
+    # 2. Mensaje en la primera ejecución
     elif primera_vez:
         enviar_telegram(
-            f"✅ <b>Monitor Pokémon Activado (Nuevos + Restock)</b>\n\n"
-            f"• <b>Ripley directo:</b> {len(prods_ripley)} artículos registrados.\n"
-            f"• <b>Big Bang Copag:</b> {len(prods_bigbang)} artículos registrados ({bb_agotados} agotados bajo vigilancia de stock).\n\n"
-            f"Te avisaré ante publicaciones nuevas o cuando repongan stock de artículos agotados."
+            f"✅ <b>Monitor Pokémon Multi-Tienda Activado</b>\n\n"
+            f"Vigilando solo productos directos (sin Marketplace):\n"
+            f"• Ripley: {len(prods_ripley)}\n"
+            f"• Big Bang Copag: {len(prods_bigbang)}\n"
+            f"• Falabella: {len(prods_falabella)}\n"
+            f"• Paris: {len(prods_paris)}\n"
+            f"• Líder: {len(prods_lider)}\n\n"
+            f"Te avisaré ante cualquier publicación nueva o reposición de stock (Restock)."
         )
 
-    # 3. Notificar Restocks (productos que volvieron a tener stock)
+    # 3. Notificar Restocks (Volvieron a tener stock)
     for p in restocks:
         msg = (
             f"🔄 <b>¡RESTOCK en {escape_html(p['tienda'])}!</b> (Volvió a tener stock)\n\n"
@@ -276,12 +421,12 @@ def ejecutar_revision():
 
     # 4. Notificar Productos Nuevos publicados
     for p in nuevos:
-        estado_disp = "✅ Disponible" if p["disponible"] else "⚠️ Agotado / Preventa"
+        estado_disp = "✅ Con stock" if p["disponible"] else "⚠️ Sin stock / Preventa"
         msg = (
             f"🚨 <b>¡Nuevo producto en {escape_html(p['tienda'])}!</b>\n\n"
             f"📦 <b>Producto:</b> {escape_html(p['nombre'])}\n"
             f"💰 <b>Precio:</b> {escape_html(p['precio'])}\n"
-            f"📌 <b>Stock:</b> {estado_disp}\n"
+            f"📌 <b>Estado:</b> {estado_disp}\n"
             f"🔗 <a href=\"{p['url']}\">Ver en la tienda</a>"
         )
         enviar_telegram(msg)
