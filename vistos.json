@@ -80,7 +80,7 @@
     "precio": "$29.990"
   },
   "bigbang_8279177199685": {
-    "disponible": false,
+    "disponible": true,
     "precio": "$32.990"
   },
   "bigbang_8279182835781": {
@@ -90,5 +90,278 @@
   "bigbang_8279187456069": {
     "disponible": true,
     "precio": "$25.990"
+  },
+  "bigbang_8358158925893": {
+    "nombre": "World Championships Deck (2025) INGLÉS",
+    "precio": "$29.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/world-championships-deck-2025-ingles"
+  },
+  "bigbang_8358158893125": {
+    "nombre": "Team Rocket's Mewtwo ex League Battle Deck ESPAÑOL",
+    "precio": "$40.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/team-rockets-mewtwo-ex-league-battle-deck-espanol"
+  },
+  "bigbang_8358158860357": {
+    "nombre": "Team Rocket Tin ESPAÑOL",
+    "precio": "$29.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/team-rocket-tin-espanol"
+  },
+  "bigbang_8358158794821": {
+    "nombre": "Obsidian Flames Booster ESPAÑOL",
+    "precio": "$5.490",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/obsidian-flames-booster-espanol"
+  },
+  "bigbang_8358158827589": {
+    "nombre": "Destined Rivals Booster INGLÉS",
+    "precio": "$5.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/destined-rivals-booster-ingles"
+  },
+  "bigbang_8358158762053": {
+    "nombre": "Stacking Tin (Q1 2024) INGLÉS",
+    "precio": "$18.990",
+    "disponible": false,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/stacking-tin-q1-2024-ingles"
+  },
+  "bigbang_8358158729285": {
+    "nombre": "First Partner Illustration Collection Series 3 (Q3 2026) INGLÉS",
+    "precio": "$24.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/first-partner-illustration-collection-series-3-q3-2026-ingles"
+  },
+  "bigbang_8358158696517": {
+    "nombre": "First Partner Illustration Collection Series 2 (Q2 2026) ESPAÑOL",
+    "precio": "$24.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/first-partner-illustration-collection-series-2-q2-2026-espanol"
+  },
+  "bigbang_8358158401605": {
+    "nombre": "Poké Ball Tin (Q3 2023) ESPAÑOL",
+    "precio": "$18.990",
+    "disponible": false,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/poke-ball-tin-q3-2023-espanol"
+  },
+  "bigbang_8358158368837": {
+    "nombre": "Poké Ball Tin (Q4 2025) INGLÉS",
+    "precio": "$18.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/poke-ball-tin-q4-2025-ingles"
+  },
+  "bigbang_8358158336069": {
+    "nombre": "Poké Ball Tin (Q4 2025) ESPAÑOL",
+    "precio": "$18.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/poke-ball-tin-q4-2025-espanol"
+  },
+  "bigbang_8358158303301": {
+    "nombre": "Mega Moonlit Tin INGLÉS",
+    "precio": "$26.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/mega-moonlit-tin-ingles"
+  },
+  "bigbang_8358158237765": {
+    "nombre": "Mega Lucario ex League Battle Deck ESPAÑOL",
+    "precio": "$41.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/mega-lucario-ex-league-battle-deck-espanol"
+  },
+  "bigbang_8358158270533": {
+    "nombre": "Mega Moonlit Tin ESPAÑOL",
+    "precio": "$24.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/mega-moonlit-tin-espanol"
+  },
+  "bigbang_8358158204997": {
+    "nombre": "Mega Heroes Mini Tin ESPAÑOL",
+    "precio": "$14.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/mega-heroes-mini-tin-espanol"
+  },
+  "bigbang_8358158172229": {
+    "nombre": "Mega Charizard Tin (2026) ESPAÑOL",
+    "precio": "$29.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/mega-charizard-tin-2026-espanol"
+  },
+  "bigbang_8358157844549": {
+    "nombre": "Mega Battle Deck Gengar ex / Diancie ex INGLÉS",
+    "precio": "$23.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/mega-battle-deck-gengar-ex-diancie-ex-ingles"
+  },
+  "bigbang_8358157811781": {
+    "nombre": "Pitch Black Booster INGLÉS",
+    "precio": "$5.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/pitch-black-booster-ingles"
+  },
+  "bigbang_8358157779013": {
+    "nombre": "Pitch Black Sleeved Booster INGLÉS",
+    "precio": "$5.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/pitch-black-sleeved-booster-ingles"
+  },
+  "bigbang_8358157746245": {
+    "nombre": "Pitch Black Elite Trainer Box INGLÉS",
+    "precio": "$69.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/pitch-black-elite-trainer-box-ingles"
+  },
+  "bigbang_8358157680709": {
+    "nombre": "Pitch Black Build & Battle Box INGLÉS",
+    "precio": "$29.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/pitch-black-build-battle-box-ingles"
+  },
+  "bigbang_8358157647941": {
+    "nombre": "Pitch Black Booster Bundle ESPAÑOL",
+    "precio": "$37.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/pitch-black-booster-bundle-espanol"
+  },
+  "bigbang_8358157615173": {
+    "nombre": "Pitch Black 3-Pack Blister INGLÉS",
+    "precio": "$18.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/pitch-black-3-pack-blister-ingles"
+  },
+  "bigbang_8358157582405": {
+    "nombre": "Pitch Black 3-Pack Blister ESPAÑOL",
+    "precio": "$18.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/pitch-black-3-pack-blister-espanol"
+  },
+  "bigbang_8358157254725": {
+    "nombre": "Chaos Rising Elite Trainer Box INGLÉS",
+    "precio": "$69.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/chaos-rising-elite-trainer-box-ingles"
+  },
+  "bigbang_8358157221957": {
+    "nombre": "Chaos Rising Elite Trainer Box ESPAÑOL",
+    "precio": "$65.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/chaos-rising-elite-trainer-box-espanol"
+  },
+  "bigbang_8358157123653": {
+    "nombre": "Chaos Rising 3-Pack Blister INGLÉS",
+    "precio": "$18.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/chaos-rising-3-pack-blister-ingles"
+  },
+  "bigbang_8358157090885": {
+    "nombre": "Chaos Rising 3-Pack Blister ESPAÑOL",
+    "precio": "$18.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/chaos-rising-3-pack-blister-espanol"
+  },
+  "bigbang_8358156828741": {
+    "nombre": "Chaos Rising Build & Battle Box INGLÉS",
+    "precio": "$29.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/chaos-rising-build-battle-box-ingles"
+  },
+  "bigbang_8358156730437": {
+    "nombre": "Perfect Order Elite Trainer Box INGLÉS",
+    "precio": "$69.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/perfect-order-elite-trainer-box-ingles"
+  },
+  "bigbang_8358156697669": {
+    "nombre": "Perfect Order Booster INGLÉS",
+    "precio": "$5.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/perfect-order-booster-ingles"
+  },
+  "bigbang_8358156632133": {
+    "nombre": "Perfect Order Booster Bundle ESPAÑOL",
+    "precio": "$36.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/perfect-order-booster-bundle-espanol"
+  },
+  "bigbang_8358156599365": {
+    "nombre": "Perfect Order 3-Pack Blister INGLÉS",
+    "precio": "$18.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/perfect-order-3-pack-blister-ingles"
+  },
+  "bigbang_8358156337221": {
+    "nombre": "Perfect Order 3-Pack Blister ESPAÑOL",
+    "precio": "$18.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/perfect-order-3-pack-blister-espanol"
+  },
+  "bigbang_8358156304453": {
+    "nombre": "Perfect Order Build & Battle Box INGLÉS",
+    "precio": "$29.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/perfect-order-build-battle-box-ingles"
+  },
+  "bigbang_8358156271685": {
+    "nombre": "Mega Evolution Mini Portfolio (Q3 2025) ESPAÑOL",
+    "precio": "$7.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/mega-evolution-mini-portfolio-q3-2025-espanol"
+  },
+  "bigbang_8358156238917": {
+    "nombre": "Lumiose City Mini Tin INGLÉS",
+    "precio": "$12.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/lumiose-city-mini-tin-ingles"
+  },
+  "bigbang_8358156173381": {
+    "nombre": "Enhanced 2-Pack Blister (Oct 2025) INGLÉS",
+    "precio": "$13.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/enhanced-2-pack-blister-oct-2025-ingles"
+  },
+  "bigbang_8334195949637": {
+    "nombre": "Pitch Black Booster Bundle INGLÉS",
+    "precio": "$36.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/pitch-black-booster-bundle-ingles"
   }
 }
