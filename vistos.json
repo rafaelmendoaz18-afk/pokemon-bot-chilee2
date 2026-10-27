@@ -136,7 +136,7 @@
   "bigbang_8358158729285": {
     "nombre": "First Partner Illustration Collection Series 3 (Q3 2026) INGLÉS",
     "precio": "$24.990",
-    "disponible": true,
+    "disponible": false,
     "tienda": "Big Bang Copag",
     "url": "https://bigbang.cl/products/first-partner-illustration-collection-series-3-q3-2026-ingles"
   },
@@ -426,5 +426,33 @@
     "disponible": true,
     "tienda": "Big Bang Copag",
     "url": "https://bigbang.cl/products/poke-ball-tin-best-of-2021-espanol"
+  },
+  "bigbang_8362377084997": {
+    "nombre": "Mega Evolution - Sleeved Booster Español",
+    "precio": "$5.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/mega-evolution-sleeved-booster-espanol"
+  },
+  "bigbang_8358156107845": {
+    "nombre": "30th Celebration Tech Sticker Collection INGLÉS",
+    "precio": "$24.490",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/30th-celebration-tech-sticker-collection-ingles"
+  },
+  "bigbang_8358156009541": {
+    "nombre": "30th Celebration Tech Sticker Collection ESPAÑOL",
+    "precio": "$24.490",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/30th-celebration-tech-sticker-collection-espanol"
+  },
+  "bigbang_8358155845701": {
+    "nombre": "30th Celebration Booster Bundle ESPAÑOL",
+    "precio": "$43.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/30th-celebration-booster-bundle-espanol"
   }
 }
