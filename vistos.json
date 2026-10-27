@@ -114,7 +114,7 @@
   },
   "bigbang_8358158794821": {
     "nombre": "Obsidian Flames Booster ESPAÑOL",
-    "precio": "$5.490",
+    "precio": "$6.990",
     "disponible": true,
     "tienda": "Big Bang Copag",
     "url": "https://bigbang.cl/products/obsidian-flames-booster-espanol"
@@ -157,7 +157,7 @@
   "bigbang_8358158368837": {
     "nombre": "Poké Ball Tin (Q4 2025) INGLÉS",
     "precio": "$18.990",
-    "disponible": true,
+    "disponible": false,
     "tienda": "Big Bang Copag",
     "url": "https://bigbang.cl/products/poke-ball-tin-q4-2025-ingles"
   },
@@ -363,5 +363,68 @@
     "disponible": true,
     "tienda": "Big Bang Copag",
     "url": "https://bigbang.cl/products/pitch-black-booster-bundle-ingles"
+  },
+  "bigbang_8358157320261": {
+    "nombre": "Chaos Rising Sleeved Booster INGLÉS",
+    "precio": "$5.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/chaos-rising-sleeved-booster-ingles"
+  },
+  "bigbang_8358157287493": {
+    "nombre": "Chaos Rising Sleeved Booster ESPAÑOL",
+    "precio": "$5.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/chaos-rising-sleeved-booster-espanol"
+  },
+  "bigbang_8358157189189": {
+    "nombre": "Chaos Rising Booster INGLÉS",
+    "precio": "$5.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/chaos-rising-booster-ingles"
+  },
+  "bigbang_8358157156421": {
+    "nombre": "Chaos Rising Booster ESPAÑOL",
+    "precio": "$5.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/chaos-rising-booster-espanol"
+  },
+  "bigbang_8358156795973": {
+    "nombre": "Perfect Order Sleeved Booster INGLÉS",
+    "precio": "$5.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/perfect-order-sleeved-booster-ingles"
+  },
+  "bigbang_8358156763205": {
+    "nombre": "Perfect Order Sleeved Booster ESPAÑOL",
+    "precio": "$5.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/perfect-order-sleeved-booster-espanol"
+  },
+  "bigbang_8358156664901": {
+    "nombre": "Perfect Order Booster ESPAÑOL",
+    "precio": "$5.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/perfect-order-booster-espanol"
+  },
+  "bigbang_8358156206149": {
+    "nombre": "Journey Together Booster INGLÉS",
+    "precio": "$6.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/journey-together-booster-ingles"
+  },
+  "bigbang_7515041890373": {
+    "nombre": "Pokémon - Poké Ball Tin - Best of 2021 - Español",
+    "precio": "$18.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/poke-ball-tin-best-of-2021-espanol"
   }
 }
