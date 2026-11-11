@@ -451,7 +451,7 @@
   "bigbang_8358155845701": {
     "nombre": "30th Celebration Booster Bundle ESPAÑOL",
     "precio": "$43.990",
-    "disponible": false,
+    "disponible": true,
     "tienda": "Big Bang Copag",
     "url": "https://bigbang.cl/products/30th-celebration-booster-bundle-espanol"
   },
@@ -503,5 +503,12 @@
     "disponible": false,
     "tienda": "Paris (Directo)",
     "url": "https://www.paris.cl/juego-de-cartas-pokemon-30th-elite-trainer-box-english-574897999.html"
+  },
+  "bigbang_8358155911237": {
+    "nombre": "30th Celebration Elite Trainer Box INGLÉS",
+    "precio": "$99.999",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/30th-celebration-elite-trainer-box-ingles"
   }
 }
