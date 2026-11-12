@@ -436,15 +436,15 @@
   },
   "bigbang_8358156107845": {
     "nombre": "30th Celebration Tech Sticker Collection INGLÉS",
-    "precio": "$24.490",
-    "disponible": false,
+    "precio": "$30.490",
+    "disponible": true,
     "tienda": "Big Bang Copag",
     "url": "https://bigbang.cl/products/30th-celebration-tech-sticker-collection-ingles"
   },
   "bigbang_8358156009541": {
     "nombre": "30th Celebration Tech Sticker Collection ESPAÑOL",
     "precio": "$24.490",
-    "disponible": false,
+    "disponible": true,
     "tienda": "Big Bang Copag",
     "url": "https://bigbang.cl/products/30th-celebration-tech-sticker-collection-espanol"
   },
@@ -510,5 +510,12 @@
     "disponible": true,
     "tienda": "Big Bang Copag",
     "url": "https://bigbang.cl/products/30th-celebration-elite-trainer-box-ingles"
+  },
+  "bigbang_8358155878469": {
+    "nombre": "30th Celebration Booster Bundle INGLÉS",
+    "precio": "$59.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/30th-celebration-booster-bundle-ingles"
   }
 }
