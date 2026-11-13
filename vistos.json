@@ -17,7 +17,7 @@
   },
   "bigbang_7879339900997": {
     "disponible": true,
-    "precio": "$169.990"
+    "precio": "$100.000"
   },
   "bigbang_7883807424581": {
     "disponible": false,
@@ -68,7 +68,7 @@
     "precio": "$31.990"
   },
   "bigbang_8278845587525": {
-    "disponible": true,
+    "disponible": false,
     "precio": "$28.990"
   },
   "bigbang_8278882189381": {
@@ -93,7 +93,7 @@
   },
   "bigbang_8358158925893": {
     "nombre": "World Championships Deck (2025) INGLÉS",
-    "precio": "$29.990",
+    "precio": "$12.990",
     "disponible": true,
     "tienda": "Big Bang Copag",
     "url": "https://bigbang.cl/products/world-championships-deck-2025-ingles"
@@ -517,5 +517,33 @@
     "disponible": true,
     "tienda": "Big Bang Copag",
     "url": "https://bigbang.cl/products/30th-celebration-booster-bundle-ingles"
+  },
+  "bigbang_8413502832709": {
+    "nombre": "Mega Greninja ex Premium Collection ESPAÑOL",
+    "precio": "$45.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/mega-greninja-ex-premium-collection-espanol"
+  },
+  "bigbang_8413113385029": {
+    "nombre": "Prismatic Evolutions - Super Premium Collection INGLÉS",
+    "precio": "$174.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/prismatic-evolutions-super-premium-collection-ingles"
+  },
+  "bigbang_8413085335621": {
+    "nombre": "Trainer's Toolkit (2025) INGLÉS",
+    "precio": "$31.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/trainers-toolkit-2025-ingles"
+  },
+  "bigbang_7978842423365": {
+    "nombre": "Ascended Heroes Elite Trainer Box ESPAÑOL",
+    "precio": "$68.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/ascended-heroes-elite-trainer-box-ingles-espanol"
   }
 }
