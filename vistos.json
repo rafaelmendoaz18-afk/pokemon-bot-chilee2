@@ -458,28 +458,28 @@
   "paris_518857999": {
     "nombre": "Juego De Cartas Pokemon Pitch Black 3 Pack Blister Espanol",
     "precio": "Ver en Paris",
-    "disponible": false,
+    "disponible": true,
     "tienda": "Paris (Directo)",
     "url": "https://www.paris.cl/juego-de-cartas-pokemon-pitch-black-3-pack-blister-espanol-518857999.html"
   },
   "paris_460291999": {
     "nombre": "Juego De Cartas Ascended Heroes Deluxe Pin Espanol",
     "precio": "Ver en Paris",
-    "disponible": false,
+    "disponible": true,
     "tienda": "Paris (Directo)",
     "url": "https://www.paris.cl/juego-de-cartas-ascended-heroes-deluxe-pin-espanol-460291999.html"
   },
   "paris_518868999": {
     "nombre": "Juego De Cartas Pokemon Pitch Black Trainer Box English",
     "precio": "Ver en Paris",
-    "disponible": false,
+    "disponible": true,
     "tienda": "Paris (Directo)",
     "url": "https://www.paris.cl/juego-de-cartas-pokemon-pitch-black-trainer-box-english-518868999.html"
   },
   "paris_518852999": {
     "nombre": "Juego De Cartas Pokemon Mega Greninja Ex Premium English",
     "precio": "Ver en Paris",
-    "disponible": false,
+    "disponible": true,
     "tienda": "Paris (Directo)",
     "url": "https://www.paris.cl/juego-de-cartas-pokemon-mega-greninja-ex-premium-english-518852999.html"
   },
@@ -500,7 +500,7 @@
   "paris_574897999": {
     "nombre": "Juego de Cartas Pokémon 30Th Elite Trainer Box English",
     "precio": "$79.990",
-    "disponible": false,
+    "disponible": true,
     "tienda": "Paris (Directo)",
     "url": "https://www.paris.cl/juego-de-cartas-pokemon-30th-elite-trainer-box-english-574897999.html"
   },
@@ -545,5 +545,19 @@
     "disponible": true,
     "tienda": "Big Bang Copag",
     "url": "https://bigbang.cl/products/ascended-heroes-elite-trainer-box-ingles-espanol"
+  },
+  "paris_574907999": {
+    "nombre": "Juego De Cartas Pokemon 30Th Celebration Binder English",
+    "precio": "Ver en Paris",
+    "disponible": true,
+    "tienda": "Paris (Directo)",
+    "url": "https://www.paris.cl/juego-de-cartas-pokemon-30th-celebration-binder-english-574907999.html"
+  },
+  "paris_574909999": {
+    "nombre": "Juego De Cartas Pokemon 30Th Celebration Binder Espanol",
+    "precio": "Ver en Paris",
+    "disponible": true,
+    "tienda": "Paris (Directo)",
+    "url": "https://www.paris.cl/juego-de-cartas-pokemon-30th-celebration-binder-espanol-574909999.html"
   }
 }
