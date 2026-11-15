@@ -458,28 +458,28 @@
   "paris_518857999": {
     "nombre": "Juego De Cartas Pokemon Pitch Black 3 Pack Blister Espanol",
     "precio": "Ver en Paris",
-    "disponible": true,
+    "disponible": false,
     "tienda": "Paris (Directo)",
     "url": "https://www.paris.cl/juego-de-cartas-pokemon-pitch-black-3-pack-blister-espanol-518857999.html"
   },
   "paris_460291999": {
     "nombre": "Juego De Cartas Ascended Heroes Deluxe Pin Espanol",
     "precio": "Ver en Paris",
-    "disponible": true,
+    "disponible": false,
     "tienda": "Paris (Directo)",
     "url": "https://www.paris.cl/juego-de-cartas-ascended-heroes-deluxe-pin-espanol-460291999.html"
   },
   "paris_518868999": {
     "nombre": "Juego De Cartas Pokemon Pitch Black Trainer Box English",
     "precio": "Ver en Paris",
-    "disponible": true,
+    "disponible": false,
     "tienda": "Paris (Directo)",
     "url": "https://www.paris.cl/juego-de-cartas-pokemon-pitch-black-trainer-box-english-518868999.html"
   },
   "paris_518852999": {
     "nombre": "Juego De Cartas Pokemon Mega Greninja Ex Premium English",
     "precio": "Ver en Paris",
-    "disponible": true,
+    "disponible": false,
     "tienda": "Paris (Directo)",
     "url": "https://www.paris.cl/juego-de-cartas-pokemon-mega-greninja-ex-premium-english-518852999.html"
   },
@@ -500,7 +500,7 @@
   "paris_574897999": {
     "nombre": "Juego de Cartas Pokémon 30Th Elite Trainer Box English",
     "precio": "$79.990",
-    "disponible": true,
+    "disponible": false,
     "tienda": "Paris (Directo)",
     "url": "https://www.paris.cl/juego-de-cartas-pokemon-30th-elite-trainer-box-english-574897999.html"
   },
@@ -549,15 +549,78 @@
   "paris_574907999": {
     "nombre": "Juego De Cartas Pokemon 30Th Celebration Binder English",
     "precio": "Ver en Paris",
-    "disponible": true,
+    "disponible": false,
     "tienda": "Paris (Directo)",
     "url": "https://www.paris.cl/juego-de-cartas-pokemon-30th-celebration-binder-english-574907999.html"
   },
   "paris_574909999": {
     "nombre": "Juego De Cartas Pokemon 30Th Celebration Binder Espanol",
     "precio": "Ver en Paris",
-    "disponible": true,
+    "disponible": false,
     "tienda": "Paris (Directo)",
     "url": "https://www.paris.cl/juego-de-cartas-pokemon-30th-celebration-binder-espanol-574909999.html"
+  },
+  "bigbang_8415987204165": {
+    "nombre": "Deck Crafter's Collection ESPAÑOL",
+    "precio": "$19.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/deck-crafters-collection-espanol"
+  },
+  "bigbang_8415987171397": {
+    "nombre": "Deck Crafter's Collection INGLÉS",
+    "precio": "$19.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/deck-crafters-collection-ingles"
+  },
+  "bigbang_8415987138629": {
+    "nombre": "Mega Forces Tin (Q3 2026) ESPAÑOL",
+    "precio": "$29.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/mega-forces-tin-q3-2026-espanol"
+  },
+  "bigbang_8415987105861": {
+    "nombre": "First Partner Illustration Collection Series 3 (Q3 2026) ESPAÑOL",
+    "precio": "$24.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/first-partner-illustration-collection-series-3-q3-2026-espanol"
+  },
+  "bigbang_8415986253893": {
+    "nombre": "Pitch Black Elite Trainer Box ESPAÑOL",
+    "precio": "$65.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/pitch-black-elite-trainer-box-espanol"
+  },
+  "bigbang_8415986221125": {
+    "nombre": "Pitch Black Checklane Blister INGLÉS",
+    "precio": "$8.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/pitch-black-checklane-blister-ingles"
+  },
+  "bigbang_8415986188357": {
+    "nombre": "Pitch Black Sleeved Booster ESPAÑOL",
+    "precio": "$5.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/pitch-black-sleeved-booster-espanol"
+  },
+  "bigbang_8415986155589": {
+    "nombre": "Mega Lucario ex League Battle Deck INGLÉS",
+    "precio": "$41.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/mega-lucario-ex-league-battle-deck-ingles"
+  },
+  "bigbang_8415985795141": {
+    "nombre": "Mega Kangaskhan ex Box ESPAÑOL",
+    "precio": "$30.900",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/mega-kangaskhan-ex-box-espanol"
   }
 }
