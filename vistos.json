@@ -451,7 +451,7 @@
   "bigbang_8358155845701": {
     "nombre": "30th Celebration Booster Bundle ESPAÑOL",
     "precio": "$43.990",
-    "disponible": true,
+    "disponible": false,
     "tienda": "Big Bang Copag",
     "url": "https://bigbang.cl/products/30th-celebration-booster-bundle-espanol"
   },
@@ -465,28 +465,28 @@
   "paris_460291999": {
     "nombre": "Juego De Cartas Ascended Heroes Deluxe Pin Espanol",
     "precio": "Ver en Paris",
-    "disponible": false,
+    "disponible": true,
     "tienda": "Paris (Directo)",
     "url": "https://www.paris.cl/juego-de-cartas-ascended-heroes-deluxe-pin-espanol-460291999.html"
   },
   "paris_518868999": {
     "nombre": "Juego De Cartas Pokemon Pitch Black Trainer Box English",
     "precio": "Ver en Paris",
-    "disponible": false,
+    "disponible": true,
     "tienda": "Paris (Directo)",
     "url": "https://www.paris.cl/juego-de-cartas-pokemon-pitch-black-trainer-box-english-518868999.html"
   },
   "paris_518852999": {
     "nombre": "Juego De Cartas Pokemon Mega Greninja Ex Premium English",
     "precio": "Ver en Paris",
-    "disponible": false,
+    "disponible": true,
     "tienda": "Paris (Directo)",
     "url": "https://www.paris.cl/juego-de-cartas-pokemon-mega-greninja-ex-premium-english-518852999.html"
   },
   "paris_518870999": {
     "nombre": "Juego De Cartas Pokemon Pitch Black Trainer Box Espanol",
     "precio": "Ver en Paris",
-    "disponible": false,
+    "disponible": true,
     "tienda": "Paris (Directo)",
     "url": "https://www.paris.cl/juego-de-cartas-pokemon-pitch-black-trainer-box-espanol-518870999.html"
   },
@@ -500,7 +500,7 @@
   "paris_574897999": {
     "nombre": "Juego de Cartas Pokémon 30Th Elite Trainer Box English",
     "precio": "$79.990",
-    "disponible": false,
+    "disponible": true,
     "tienda": "Paris (Directo)",
     "url": "https://www.paris.cl/juego-de-cartas-pokemon-30th-elite-trainer-box-english-574897999.html"
   },
@@ -528,7 +528,7 @@
   "bigbang_8413113385029": {
     "nombre": "Prismatic Evolutions - Super Premium Collection INGLÉS",
     "precio": "$174.990",
-    "disponible": false,
+    "disponible": true,
     "tienda": "Big Bang Copag",
     "url": "https://bigbang.cl/products/prismatic-evolutions-super-premium-collection-ingles"
   },
@@ -549,14 +549,14 @@
   "paris_574907999": {
     "nombre": "Juego De Cartas Pokemon 30Th Celebration Binder English",
     "precio": "Ver en Paris",
-    "disponible": false,
+    "disponible": true,
     "tienda": "Paris (Directo)",
     "url": "https://www.paris.cl/juego-de-cartas-pokemon-30th-celebration-binder-english-574907999.html"
   },
   "paris_574909999": {
     "nombre": "Juego De Cartas Pokemon 30Th Celebration Binder Espanol",
     "precio": "Ver en Paris",
-    "disponible": false,
+    "disponible": true,
     "tienda": "Paris (Directo)",
     "url": "https://www.paris.cl/juego-de-cartas-pokemon-30th-celebration-binder-espanol-574909999.html"
   },
@@ -636,5 +636,47 @@
     "disponible": true,
     "tienda": "Big Bang Copag",
     "url": "https://bigbang.cl/products/30th-celebration-elite-trainer-box-espanol"
+  },
+  "bigbang_8434023432261": {
+    "nombre": "SV10.5 Black Bolt & White Flare - Unova Poster Collection INGLÉS",
+    "precio": "$31.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/sv10-5-black-bolt-white-flare-unova-poster-collection-ingles"
+  },
+  "bigbang_8434021859397": {
+    "nombre": "30th Celebration Binder Collection INGLÉS",
+    "precio": "$52.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/30th-celebration-binder-collection-ingles"
+  },
+  "bigbang_8433996464197": {
+    "nombre": "30th Celebration Binder Collection ESPAÑOL",
+    "precio": "$52.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/30th-celebration-binder-collection-espanol"
+  },
+  "bigbang_8433887346757": {
+    "nombre": "Delta Reign Booster Bundle ESPAÑOL",
+    "precio": "$36.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/delta-reign-booster-bundle-espanol"
+  },
+  "bigbang_8433887281221": {
+    "nombre": "Delta Reign Build & Battle Box INGLÉS",
+    "precio": "$29.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/delta-reign-build-battle-box-ingles"
+  },
+  "bigbang_8424391114821": {
+    "nombre": "30th Celebration Ultra Premium Collection INGLÉS – SEGUNDA SELECCIÓN",
+    "precio": "$270.000",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/30th-celebration-ultra-premium-collection-ingles"
   }
 }
