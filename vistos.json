@@ -1,6 +1,6 @@
 {
   "bigbang_7515038613573": {
-    "disponible": false,
+    "disponible": true,
     "precio": "$40.990"
   },
   "bigbang_7727697166405": {
@@ -678,5 +678,40 @@
     "disponible": false,
     "tienda": "Big Bang Copag",
     "url": "https://bigbang.cl/products/30th-celebration-ultra-premium-collection-ingles"
+  },
+  "bigbang_7879335018565": {
+    "nombre": "Mega Charizard X ex Ultra Premium Collection INGLÉS – SEGUNDA SELECCIÓN",
+    "precio": "$139.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/mega-charizard-x-ex-ultra-premium-collection-ingles"
+  },
+  "bigbang_7793243324485": {
+    "nombre": "SV 10.5 Black Bolt - Tech Sticker Collection ESPAÑOL",
+    "precio": "$18.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/sv-10-5-black-bolt-tech-sticker-collection-espanol"
+  },
+  "bigbang_7793149149253": {
+    "nombre": "2° Selección Slashing Legends Tin INGLÉS",
+    "precio": "$31.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/slashing-legends-tin-ingles"
+  },
+  "bigbang_7727720955973": {
+    "nombre": "2° SELECCIÓN  Team Rockets Mewtwo ex Box INGLÉS",
+    "precio": "$20.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/team-rockets-mewtwo-ex-box-ingles"
+  },
+  "bigbang_7727691989061": {
+    "nombre": "2° Selección Iono's Bellibolt ex Premium Collection ESPAÑOL",
+    "precio": "$59.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/ionos-bellibolt-ex-premium-collection-espanol"
   }
 }
