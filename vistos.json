@@ -626,7 +626,7 @@
   "bigbang_8420892180549": {
     "nombre": "30th Celebration Elite Trainer Box ESPAÑOL – Segunda Selección",
     "precio": "$74.990",
-    "disponible": false,
+    "disponible": true,
     "tienda": "Big Bang Copag",
     "url": "https://bigbang.cl/products/30th-celebration-elite-trainer-box-espanol-segunda-seleccion"
   },
@@ -674,8 +674,8 @@
   },
   "bigbang_8424391114821": {
     "nombre": "30th Celebration Ultra Premium Collection INGLÉS – SEGUNDA SELECCIÓN",
-    "precio": "$270.000",
-    "disponible": false,
+    "precio": "$279.990",
+    "disponible": true,
     "tienda": "Big Bang Copag",
     "url": "https://bigbang.cl/products/30th-celebration-ultra-premium-collection-ingles"
   },
@@ -703,7 +703,7 @@
   "bigbang_7727720955973": {
     "nombre": "2° SELECCIÓN  Team Rockets Mewtwo ex Box INGLÉS",
     "precio": "$20.990",
-    "disponible": true,
+    "disponible": false,
     "tienda": "Big Bang Copag",
     "url": "https://bigbang.cl/products/team-rockets-mewtwo-ex-box-ingles"
   },
