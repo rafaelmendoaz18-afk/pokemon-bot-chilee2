@@ -720,5 +720,33 @@
     "disponible": true,
     "tienda": "Big Bang Copag",
     "url": "https://bigbang.cl/products/30th-celebration-ex-box-ingles"
+  },
+  "bigbang_8439153950789": {
+    "nombre": "Delta Reign Checklane Blister INGLÉS",
+    "precio": "$7.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/delta-reign-checklane-blister-ingles"
+  },
+  "bigbang_8439153885253": {
+    "nombre": "Delta Reign Booster ESPAÑOL",
+    "precio": "$5.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/delta-reign-booster-espanol"
+  },
+  "bigbang_8439152803909": {
+    "nombre": "Delta Reign Booster INGLÉS",
+    "precio": "$5.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/delta-reign-booster-ingles"
+  },
+  "bigbang_8413503029317": {
+    "nombre": "30th Celebration Figure Collection INGLÉS",
+    "precio": "$49.990",
+    "disponible": true,
+    "tienda": "Big Bang Copag",
+    "url": "https://bigbang.cl/products/30th-celebration-figure-collection-ingles"
   }
 }
