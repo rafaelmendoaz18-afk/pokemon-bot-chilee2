@@ -122,7 +122,7 @@
   "bigbang_8358158827589": {
     "nombre": "Destined Rivals Booster INGLÉS",
     "precio": "$5.690",
-    "disponible": true,
+    "disponible": false,
     "tienda": "Big Bang Copag",
     "url": "https://bigbang.cl/products/destined-rivals-booster-ingles"
   },
@@ -682,7 +682,7 @@
   "bigbang_7879335018565": {
     "nombre": "Mega Charizard X ex Ultra Premium Collection INGLÉS – SEGUNDA SELECCIÓN",
     "precio": "$135.000",
-    "disponible": true,
+    "disponible": false,
     "tienda": "Big Bang Copag",
     "url": "https://bigbang.cl/products/mega-charizard-x-ex-ultra-premium-collection-ingles"
   },
