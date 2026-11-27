@@ -24,7 +24,7 @@
     "precio": "$29.990"
   },
   "bigbang_7883820269637": {
-    "disponible": true,
+    "disponible": false,
     "precio": "$64.990"
   },
   "bigbang_7883831115845": {
@@ -164,7 +164,7 @@
   "bigbang_8358158336069": {
     "nombre": "Poké Ball Tin (Q4 2025) ESPAÑOL",
     "precio": "$14.290",
-    "disponible": true,
+    "disponible": false,
     "tienda": "Big Bang Copag",
     "url": "https://bigbang.cl/products/poke-ball-tin-q4-2025-espanol"
   },
