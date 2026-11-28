@@ -108,7 +108,7 @@
   "bigbang_8358158860357": {
     "nombre": "Team Rocket Tin ESPAÑOL",
     "precio": "$17.790",
-    "disponible": true,
+    "disponible": false,
     "tienda": "Big Bang Copag",
     "url": "https://bigbang.cl/products/team-rocket-tin-espanol"
   },
@@ -423,7 +423,7 @@
   "bigbang_7515041890373": {
     "nombre": "Pokémon - Poké Ball Tin - Best of 2021 - Español",
     "precio": "$12.590",
-    "disponible": true,
+    "disponible": false,
     "tienda": "Big Bang Copag",
     "url": "https://bigbang.cl/products/poke-ball-tin-best-of-2021-espanol"
   },
@@ -528,7 +528,7 @@
   "bigbang_8413113385029": {
     "nombre": "Prismatic Evolutions - Super Premium Collection INGLÉS",
     "precio": "$140.090",
-    "disponible": true,
+    "disponible": false,
     "tienda": "Big Bang Copag",
     "url": "https://bigbang.cl/products/prismatic-evolutions-super-premium-collection-ingles"
   },
