@@ -325,7 +325,7 @@
   "bigbang_8358156337221": {
     "nombre": "Perfect Order 3-Pack Blister ESPAÑOL",
     "precio": "$11.390",
-    "disponible": true,
+    "disponible": false,
     "tienda": "Big Bang Copag",
     "url": "https://bigbang.cl/products/perfect-order-3-pack-blister-espanol"
   },
@@ -675,7 +675,7 @@
   "bigbang_8424391114821": {
     "nombre": "30th Celebration Ultra Premium Collection INGLÉS – SEGUNDA SELECCIÓN",
     "precio": "$279.990",
-    "disponible": true,
+    "disponible": false,
     "tienda": "Big Bang Copag",
     "url": "https://bigbang.cl/products/30th-celebration-ultra-premium-collection-ingles"
   },
